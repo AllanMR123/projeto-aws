@@ -28,14 +28,14 @@ Route::post('/register', [AuthController::class, 'register']);
 // ==========================
 Route::middleware('auth')->group(function () {
     Route::get('/monte-seu-pc', function () {
-        return 'Aqui será a página de montar PC!';
-    });
+        return view('montepc'); // chama a view
+    })->name('montepc');
 
     Route::get('/produtos', function () {
-        return 'Aqui será a página de produtos!';
-    });
+        return view('produtos'); // chama a view
+    })->name('produtos');
 
     Route::get('/carrinho', function () {
-        return 'Aqui será a página do carrinho!';
-    });
+        return view('carrinho'); // chama a view
+    })->name('carrinho');
 });

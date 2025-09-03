@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar - CustomPlay</title>
-    <link rel="stylesheet" href="{{ asset('css/customplay.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
 <body>
     <div class="login-container">

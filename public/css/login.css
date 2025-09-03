@@ -74,13 +74,11 @@ header {
     box-shadow: 0 0 10px #0ff;
 }
 
-/* Logo com sombra para contraste */
 .header-left img {
-    height: 60px;
+    height: 50px; /* diminuído para caber melhor */
     filter: drop-shadow(0 0 5px #0ff);
 }
 
-/* Centraliza os links principais */
 .header-center {
     display: flex;
     gap: 30px;
@@ -97,7 +95,6 @@ header {
     color: #0c9;
 }
 
-/* Área direita: login / usuário logado */
 .header-right {
     display: flex;
     align-items: center;
@@ -106,21 +103,6 @@ header {
 
 .logout-btn {
     padding: 5px 10px;
-}
-
-/* Navegação geral */
-nav {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-nav a.auth-link,
-nav span.auth-link,
-nav form {
-    margin-left: auto;
 }
 
 /* ==================================================
@@ -206,6 +188,124 @@ nav form {
     font-weight: bold;
     margin: 10px 0;
     color: #0c9;
+}
+
+/* ==================================================
+   CARRINHO
+================================================== */
+.cart-container {
+    max-width: 900px;
+    margin: 50px auto;
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0ff;
+}
+
+.cart-header {
+    display: flex;
+    font-weight: bold;
+    color: #0ff;
+    border-bottom: 1px solid #0ff;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.cart-header div {
+    flex: 1;
+    text-align: center;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #0ff;
+    padding: 10px 0;
+}
+
+.cart-item div {
+    flex: 1;
+    text-align: center;
+}
+
+.cart-item img {
+    width: 80px;
+    border-radius: 5px;
+}
+
+.cart-item input {
+    width: 50px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    background: #222;
+    color: #fff;
+    padding: 5px;
+}
+
+.cart-item button {
+    background-color: #0ff;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-item button:hover {
+    background-color: #0c9;
+}
+
+.cart-total {
+    text-align: right;
+    margin-top: 20px;
+    font-size: 1.2em;
+    color: #0ff;
+}
+
+.checkout-btn {
+    display: block;
+    margin: 20px auto 0 auto;
+    padding: 15px 30px;
+    background-color: #0ff;
+    color: #000;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.checkout-btn:hover {
+    background-color: #0c9;
+}
+
+/* ==================================================
+   MONTE SEU PC
+================================================== */
+.pc-builder {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: auto;
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #0ff;
+}
+
+.pc-builder label {
+    font-weight: bold;
+    color: #0ff;
+}
+
+.pc-builder select {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: #222;
+    color: #fff;
 }
 
 /* ==================================================
