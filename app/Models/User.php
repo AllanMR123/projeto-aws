@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+// Importamos o modelo Order para o relacionamento
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -44,5 +46,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Relacionamento: Um usuário possui muitos pedidos.
+     * Essencial para carregar o histórico no Perfil.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

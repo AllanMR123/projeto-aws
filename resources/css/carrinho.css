@@ -1,0 +1,207 @@
+/* ==================================================
+    RESET E CONFIGURAÇÕES GERAIS
+================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #0d0d0d;
+    color: #fff;
+    line-height: 1.6;
+}
+
+a {
+    color: #0ff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+a:hover {
+    color: #0c9;
+    text-shadow: 0 0 8px #0ff;
+}
+
+/* ==================================================
+    HEADER RESPONSIVO (PADRÃO TECHBUILD)
+================================================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: #000;
+    border-bottom: 2px solid #00f2ff; /* Linha Neon */
+    flex-wrap: wrap;
+    position: relative;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+}
+
+.header-left img {
+    height: 50px;
+    filter: drop-shadow(0 0 5px #00f2ff);
+}
+
+.header-center {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right span {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* BOTÃO SAIR (AZUL NEON IGUAL AO STYLE.CSS) */
+.header-right .btn, .logout-btn {
+    background-color: #0ff; /* Azul/Ciano Neon */
+    color: #000;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    text-transform: none;
+    font-size: 0.85rem;
+}
+
+.header-right .btn:hover, .logout-btn:hover {
+    background-color: #fff;
+    box-shadow: 0 0 15px #0ff;
+    color: #000;
+}
+
+/* ==================================================
+    CARRINHO DE COMPRAS
+================================================== */
+.cart-container {
+    width: 95%;
+    max-width: 950px;
+    margin: 40px auto;
+    background-color: #111;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    border: 1px solid #222;
+}
+
+.cart-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #0ff;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #0ff;
+}
+
+.cart-header {
+    display: flex;
+    font-weight: bold;
+    color: #0ff;
+    border-bottom: 2px solid #0ff;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+}
+
+.cart-header div { flex: 1; text-align: center; }
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    padding: 15px 0;
+    gap: 15px;
+}
+
+.cart-item div { flex: 1; text-align: center; }
+
+.cart-item img {
+    width: 85px;
+    border-radius: 8px;
+    border: 1px solid #444;
+}
+
+.cart-item input {
+    width: 55px;
+    text-align: center;
+    border-radius: 5px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+    padding: 6px;
+}
+
+.cart-total {
+    text-align: right;
+    margin-top: 30px;
+    font-size: 1.6rem;
+    color: #0ff;
+    font-weight: bold;
+    border-top: 1px solid #333;
+    padding-top: 20px;
+}
+
+.checkout-btn {
+    display: block;
+    width: fit-content;
+    margin: 25px auto 0;
+    padding: 18px 45px;
+    background-color: #0ff;
+    color: #000;
+    font-weight: bold;
+    border-radius: 6px;
+    text-transform: none;
+    transition: 0.3s;
+}
+
+.checkout-btn:hover {
+    background-color: #fff;
+    box-shadow: 0 0 25px #0ff;
+    transform: scale(1.05);
+}
+
+/* ==================================================
+    REGRAS PARA CELULAR (MEDIA QUERIES)
+================================================== */
+@media (max-width: 768px) {
+    /* Header Empilhado */
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .header-center { width: 100%; order: 2; gap: 15px; }
+    .header-left { order: 1; }
+    .header-right { width: 100%; justify-content: center; order: 3; }
+
+    /* Transformação do Carrinho em Lista */
+    .cart-header { display: none; }
+
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px 10px;
+        background: #1a1a1a;
+        margin-bottom: 15px;
+        border-radius: 10px;
+    }
+
+    .cart-item div { width: 100%; margin-bottom: 10px; }
+
+    .cart-total { text-align: center; font-size: 1.4rem; }
+
+    .checkout-btn { width: 100%; }
+}
