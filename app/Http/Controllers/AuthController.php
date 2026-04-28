@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password; // Importante para as novas regras
 
 class AuthController extends Controller
 {
@@ -28,17 +29,27 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * MÉTODO DE LOGOUT CORRIGIDO
+     */
     public function logout(Request $request)
     {
+        // 1. Limpa especificamente o carrinho da sessão
+        $request->session()->forget('cart');
+
+        // 2. Desloga o usuário do sistema
         Auth::logout();
+
+        // 3. Destrói a sessão atual do navegador
         $request->session()->invalidate();
+
+        // 4. Gera um novo token CSRF para evitar ataques de segurança
         $request->session()->regenerateToken();
-        return redirect('/login');
+
+        // 5. Redireciona para a home (ou login)
+        return redirect('/');
     }
 
-    // =========================
-    // NOVO: Registro de Usuário
-    // =========================
     public function showRegisterForm()
     {
         return view('auth.register');
@@ -49,7 +60,15 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
+            'password' => [
+                'required',
+                'confirmed',
+                // Novas regras de segurança:
+                Password::min(8) // Mínimo de 8 caracteres
+                    ->mixedCase() // Pelo menos uma letra maiúscula e uma minúscula
+                    ->symbols()   // Pelo menos um caractere especial (!@#$%...)
+                    ->uncompromised(), // Opcional: Verifica se a senha já vazou na internet (segurança extra)
+            ],
         ]);
 
         $user = User::create([
@@ -58,7 +77,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        Auth::login($user); // Loga o usuário automaticamente
-        return redirect('/'); // Redireciona para a home
+        Auth::login($user);
+        return redirect('/');
     }
 }

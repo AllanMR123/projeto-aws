@@ -19,7 +19,7 @@ class CartController extends Controller
     }
 
     /**
-     * Adiciona um produto ao carrinho.
+     * Adiciona um produto ao carrinho e redireciona para ele.
      */
     public function add(Request $request, $id)
     {
@@ -39,7 +39,13 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        return $this->handleResponse($request, 'Produto adicionado!');
+        // AJUSTE AQUI: Em vez de usar o handleResponse (que volta),
+        // redirecionamos direto para a rota do carrinho.
+        if ($request->ajax()) {
+            return $this->handleResponse($request, 'Produto adicionado!');
+        }
+
+        return redirect()->route('carrinho')->with('success', 'Produto adicionado ao seu carrinho!');
     }
 
     /**

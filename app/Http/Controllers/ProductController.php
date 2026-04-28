@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     /**
-     * Catálogo Geral de Produtos
+     * Catálogo Geral com Busca e Paginação
      */
     public function index(Request $request)
     {
@@ -23,7 +23,7 @@ class ProductController extends Controller
             $searchTerm = $request->search;
             $query->where(function($q) use ($searchTerm) {
                 $q->where('name', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('brand', 'like', '%' . $searchTerm . '%');
+                  ->orWhere('category', 'like', '%' . $searchTerm . '%');
             });
         }
 
@@ -31,37 +31,47 @@ class ProductController extends Controller
             $query->inRandomOrder();
         }
 
-        $products = $query->paginate(24)->withQueryString();
+        $products = $query->paginate(24)->onEachSide(1)->withQueryString();
         return view('produtos', compact('products', 'categories'));
     }
 
     /**
-     * Simulador Monte seu PC (AJUSTADO COM OS NOMES DO SEU BANCO)
+     * Lógica do Monte seu PC (Builder)
      */
     public function builder(Request $request)
-    {
-        $maxPrice = $request->input('max_price');
+{
+    $maxPrice = $request->filled('max_price') ? $request->input('max_price') : null;
 
-        $getFiltered = function($category) use ($maxPrice) {
-            $q = Product::where('category', $category);
-            if ($maxPrice) {
-                $q->where('price', '<=', $maxPrice);
-            }
-            return $q->orderBy('name', 'asc')->get();
-        };
+    // Criamos uma função de busca "solta" para ignorar erros de digitação e espaços
+    $getFiltered = function($name) use ($maxPrice) {
+        $query = Product::where('category', 'LIKE', '%' . trim($name) . '%');
 
-        // NOMES CORRIGIDOS BASEADOS NO SEU PRINT:
-        $cpus = $getFiltered('CPU');
-        $gpus = $getFiltered('VIDEO-CARD');
-        $rams = $getFiltered('MEMORY');
-        $hdssd = $getFiltered('INTERNAL-HARD-DRIVE');
+        if ($maxPrice) {
+            $query->where('price', '<=', $maxPrice);
+        }
 
-        return view('montepc', compact('cpus', 'gpus', 'rams', 'hdssd'));
-    }
+        return $query->orderBy('name', 'asc')->get();
+    };
 
-    public function show($id)
-    {
-        $product = Product::findOrFail($id);
-        return view('produtos.show', compact('product'));
-    }
+    // Buscando com os nomes em minúsculas conforme você confirmou
+    $cpus         = $getFiltered('processadores');
+    $gpus         = $getFiltered('placas de vídeo');
+    $motherboards = $getFiltered('placas-mãe');
+    $rams         = $getFiltered('memória ram');
+    $discos       = $getFiltered('armazenamento');
+    $psus         = $getFiltered('fontes');
+    $cases        = $getFiltered('gabinetes');
+
+    // Variável de Debug para vermos na tela o que está acontecendo
+    $debugInfo = [
+        'total_no_banco' => Product::count(),
+        'cpus_encontradas' => $cpus->count(),
+    ];
+
+    return view('montepc', compact(
+        'cpus', 'gpus', 'motherboards', 'rams', 'discos', 'psus', 'cases', 'debugInfo'
+    ));
 }
+
+    }
+
